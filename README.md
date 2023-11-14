@@ -1,1 +1,4 @@
-# msosinska_alle
+# Stackoverflow posts analysis
+
+## Owner 
+Monika Sosińska
