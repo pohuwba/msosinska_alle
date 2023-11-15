@@ -20,7 +20,7 @@ default_args = {
 dag = DAG(
     'stackoverflow_posts',
     default_args=default_args,
-    schedule_interval="0 6 * * *",
+    schedule_interval="0 6 1 * *",
     concurrency=3,
     max_active_runs=2,
     )

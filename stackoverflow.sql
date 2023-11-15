@@ -51,7 +51,6 @@ with stack_data_0 as (
         split(tags, "|") tags 
       , view_count 
       , date_trunc(date(creation_date), month) month_
-      , date(creation_date) v_date
   from `bigquery-public-data.stackoverflow.posts_questions`
   where date(creation_date) >= '2020-01-01'
   and date(creation_date) <= cast('{{ ds }}' as date)
@@ -59,13 +58,12 @@ with stack_data_0 as (
 ,
 stack_data as (
   select
-      v_date
-    , month_
+      month_
     , tag
     , sum(view_count) view_count
   from stack_data_0 ,
   UNNEST (tags) as tag
-  group by 1, 2, 3
+  group by 1, 2
   )
 ,
 final as (
@@ -77,8 +75,7 @@ final as (
   )
   
 select 
-    sd.v_date
-  , sd.month_
+    sd.month_
   , sd.tag 
   , sd.view_count
   , ff.row_1
