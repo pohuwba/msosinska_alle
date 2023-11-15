@@ -20,7 +20,7 @@ default_args = {
 dag = DAG(
     'stackoverflow_posts',
     default_args=default_args,
-    schedule_interval="0 6 1 * *",
+    schedule_interval="0 6 * * *",
     concurrency=3,
     max_active_runs=2,
     )
@@ -36,9 +36,9 @@ stack_posts = BigQueryDataSensor(
 stack_data = AnalyticsBigQueryOperator(
     task_id = 'stack_data',
     dag = dag,
-    sql = 'de_allegro_112023.sql',
+    sql = 'stackoverflow.sql',
     destination_dataset_table = 'msosinska.de_allegro.stackoverflow_post_questions',
-    write_disposition='WRITE_APPEND',
+    write_disposition='WRITE_TRUNCATE',
 )
 
 stack_posts >> stack_data
